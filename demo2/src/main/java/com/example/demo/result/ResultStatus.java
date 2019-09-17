@@ -6,7 +6,7 @@ public enum ResultStatus {
     ERROR_REQUEST(1400, "错误的请求"),
     UNAUTHORIZED(1401, "没有授权"),
     FORBIDDEN(1403, "没有权限访问"),
-    ERROR_USERNAME(14031, "用户名错误"),
+    ERROR_USERNAME(14031, "账号不存在"),
     ERROR_PASSWORD(14032, "密码错误"),
     TOKEN_EXPIRED(14033, "TOKEN过期"),
     NOT_FOND(1404, "页面不存在"),

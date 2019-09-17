@@ -73,7 +73,7 @@ public class OrderCtrl {
             result = ResultData.db_error();
         }else{
             result = ResultData.ok();
-            result.setData(order_list);
+            result.addData("order_list",order_list);
         }
         JSONResponse jsonResponse = new JSONResponse(response,result);
         jsonResponse.JSONWrite();
@@ -86,7 +86,7 @@ public class OrderCtrl {
             result = ResultData.db_error();
         }else{
             result = ResultData.ok();
-            result.setData(order_list);
+            result.addData("order_list",order_list);
         }
         JSONResponse jsonResponse = new JSONResponse(response,result);
         jsonResponse.JSONWrite();
@@ -99,7 +99,7 @@ public class OrderCtrl {
             result = ResultData.db_error();
         }else{
             result = ResultData.ok();
-            result.setData(order_list);
+            result.addData("order_list",order_list);
         }
         JSONResponse jsonResponse = new JSONResponse(response,result);
         jsonResponse.JSONWrite();

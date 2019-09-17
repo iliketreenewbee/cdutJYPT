@@ -42,7 +42,7 @@ public class ShopCCtrl {
             result = ResultData.db_error();
         }else{
             result = ResultData.ok();
-            result.setData(shopC_list);
+            result.addData("shopC_list",shopC_list);
         }
         JSONResponse jsonResponse = new JSONResponse(response,result);
         jsonResponse.JSONWrite();
@@ -55,7 +55,7 @@ public class ShopCCtrl {
             result = ResultData.db_error();
         }else{
             result = ResultData.ok();
-            result.setData(order_product_list);
+            result.addData("order_product_list",order_product_list);
         }
         JSONResponse jsonResponse = new JSONResponse(response,result);
         jsonResponse.JSONWrite();

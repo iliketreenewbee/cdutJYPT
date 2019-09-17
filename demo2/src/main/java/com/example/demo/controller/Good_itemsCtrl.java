@@ -29,7 +29,7 @@ public class Good_itemsCtrl {
             result = ResultData.db_error();
         }else{
             result = ResultData.ok();
-            result.setData(type_list);
+            result.addData("type_list",type_list);
         }
         JSONResponse jsonResponse = new JSONResponse(response,result);
         jsonResponse.JSONWrite();
@@ -42,7 +42,7 @@ public class Good_itemsCtrl {
             result = ResultData.db_error();
         }else{
             result = ResultData.ok();
-            result.setData(type_list);
+            result.addData("type_list",type_list);
         }
         JSONResponse jsonResponse = new JSONResponse(response,result);
         jsonResponse.JSONWrite();
@@ -55,7 +55,7 @@ public class Good_itemsCtrl {
             result = ResultData.db_error();
         }else{
             result = ResultData.ok();
-            result.setData(type_list);
+            result.addData("type_list",type_list);
         }
         JSONResponse jsonResponse = new JSONResponse(response,result);
         jsonResponse.JSONWrite();

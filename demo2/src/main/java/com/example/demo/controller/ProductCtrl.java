@@ -30,7 +30,7 @@ public class ProductCtrl {
             result = ResultData.db_error();
         }else{
             result = ResultData.ok();
-            result.setData(products_list);
+            result.addData("products_list",products_list);
         }
         JSONResponse jsonResponse = new JSONResponse(response,result);
         jsonResponse.JSONWrite();
@@ -43,7 +43,7 @@ public class ProductCtrl {
             result = ResultData.notFound();
         }else{
             result = ResultData.ok();
-            result.setData(products_list);
+            result.addData("products_list",products_list);
         }
         JSONResponse jsonResponse = new JSONResponse(response,result);
         jsonResponse.JSONWrite();
@@ -56,7 +56,7 @@ public class ProductCtrl {
             result = ResultData.notFound();
         }else{
             result = ResultData.ok();
-            result.setData(products_list);
+            result.addData("products_list",products_list);
         }
         JSONResponse jsonResponse = new JSONResponse(response,result);
         jsonResponse.JSONWrite();

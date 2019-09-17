@@ -1,9 +1,13 @@
 package com.example.demo.result;
 
+import com.sun.javafx.collections.MappingChange;
+
+import java.util.Map;
+
 public class ResultData {
     private int code;           //状态码
     private String message;     //状态信息
-    private Object data;        //返回数据
+    private Map<String ,Object> data;        //返回数据
     public ResultData(){
 
     };
@@ -11,10 +15,13 @@ public class ResultData {
         this.code = code;
         this.message = message;
     }
-    public ResultData(int code,String message,Object data){
+    public ResultData(int code,String message,Map<String ,Object> data){
         this.code = code;
         this.message = message;
         this.data = data;
+    }
+    public void addData(String key,Object value){
+        this.data.put(key,value);
     }
     public int getCode() {
         return code;
@@ -31,7 +38,7 @@ public class ResultData {
     public Object getData() {
         return data;
     }
-    public void setData(Object data) {
+    public void setData(Map<String ,Object> data) {
         this.data = data;
     }
     //数据库内容已存在
