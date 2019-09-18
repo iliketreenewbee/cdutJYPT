@@ -38,7 +38,7 @@ public class UserImpl implements UserServ {
     }
 
     @Override
-    public List<User> LoginByPhone(Integer phone) {
+    public List<User> LoginByPhone(String  phone) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andPhoneEqualTo(phone);

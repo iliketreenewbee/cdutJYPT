@@ -5,9 +5,8 @@ import com.example.demo.bean.ProductsExample;
 import java.util.List;
 
 import com.example.demo.bean.Shopping_car;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-@Mapper
+
 public interface ProductsMapper {
     int countByExample(ProductsExample example);
 

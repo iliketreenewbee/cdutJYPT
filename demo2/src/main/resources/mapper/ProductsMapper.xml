@@ -327,13 +327,13 @@
     <trim prefix=" set count = case" suffix=" end ">
       <foreach collection="list" item="item" index="index">
         <if test="item.count != null">
-          when id = #{item.product_id} then count - #{item.count}
+          when id = #{item.productId} then count - #{item.count}
         </if>
       </foreach>
     </trim>
     <where>
       <foreach collection="list" separator="or" item="item">
-        id = #{item.product_id}
+        id = #{item.productId}
       </foreach>
     </where>
   </update>

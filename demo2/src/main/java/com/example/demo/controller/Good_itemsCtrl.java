@@ -24,41 +24,20 @@ public class Good_itemsCtrl {
     @RequestMapping("/SelectAll")
     public void selectAll(HttpServletResponse response) throws IOException {
         List<Good_items> type_list = goodItemsServ.SelectAll();
-        ResultData result;
-        if (type_list.isEmpty()){
-            result = ResultData.db_error();
-        }else{
-            result = ResultData.ok();
-            result.addData("type_list",type_list);
-        }
-        JSONResponse jsonResponse = new JSONResponse(response,result);
-        jsonResponse.JSONWrite();
+        JSONResponse jsonResponse = new JSONResponse(response);
+        jsonResponse.DBresultByList(type_list);
     }
     @RequestMapping("/SelectIsVal")
     public void selectIsVal(HttpServletResponse response) throws IOException {
         List<Good_items> type_list = goodItemsServ.SelectIsVal();
-        ResultData result;
-        if (type_list.isEmpty()){
-            result = ResultData.db_error();
-        }else{
-            result = ResultData.ok();
-            result.addData("type_list",type_list);
-        }
-        JSONResponse jsonResponse = new JSONResponse(response,result);
-        jsonResponse.JSONWrite();
+        JSONResponse jsonResponse = new JSONResponse(response);
+        jsonResponse.DBresultByList(type_list);
     }
     @RequestMapping("/SelectByKey")
     public void selectByKey(String key,HttpServletResponse response) throws IOException {
         List<Good_items> type_list = goodItemsServ.SelectWithKey(key);
-        ResultData result;
-        if (type_list.isEmpty()){
-            result = ResultData.db_error();
-        }else{
-            result = ResultData.ok();
-            result.addData("type_list",type_list);
-        }
-        JSONResponse jsonResponse = new JSONResponse(response,result);
-        jsonResponse.JSONWrite();
+        JSONResponse jsonResponse = new JSONResponse(response);
+        jsonResponse.DBresultByList(type_list);
     }
     @RequestMapping("/Insert")
     public void insert(Good_items good_items,HttpServletResponse response) throws IOException {

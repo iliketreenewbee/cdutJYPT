@@ -151,6 +151,14 @@
       </if>
     </trim>
   </insert>
+  <insert id="insertMany" parameterType="java.util.List">
+    insert into order (user_id,owner_id,all_price,time,status)
+    <trim prefix="values "  suffixOverrides="," >
+      <foreach collection="list" item="item" index="index" open="(" close=")" separator=") , (">
+        #{item.userId},#{item.ownerId},#{item.all_price},#{item.time},#{item.orderStatus}
+      </foreach>
+    </trim>
+  </insert>
   <select id="countByExample" parameterType="com.example.demo.bean.OrderExample" resultType="java.lang.Integer" >
     select count(*) from order
     <if test="_parameter != null" >

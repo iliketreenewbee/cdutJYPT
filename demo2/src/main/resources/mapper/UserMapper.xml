@@ -3,7 +3,7 @@
 <mapper namespace="com.example.demo.dao.UserMapper" >
   <resultMap id="BaseResultMap" type="com.example.demo.bean.User" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="phone" property="phone" jdbcType="INTEGER" />
+    <result column="phone" property="phone" jdbcType="CHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
@@ -105,7 +105,7 @@
     insert into user (id, phone, password, 
       name, address, img, 
       type)
-    values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=CHAR}, #{password,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
       #{type,jdbcType=VARCHAR})
   </insert>
@@ -139,7 +139,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="phone != null" >
-        #{phone,jdbcType=INTEGER},
+        #{phone,jdbcType=CHAR},
       </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
@@ -171,7 +171,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.phone != null" >
-        phone = #{record.phone,jdbcType=INTEGER},
+        phone = #{record.phone,jdbcType=CHAR},
       </if>
       <if test="record.password != null" >
         password = #{record.password,jdbcType=VARCHAR},
@@ -196,7 +196,7 @@
   <update id="updateByExample" parameterType="map" >
     update user
     set id = #{record.id,jdbcType=INTEGER},
-      phone = #{record.phone,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=CHAR},
       password = #{record.password,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
@@ -210,7 +210,7 @@
     update user
     <set >
       <if test="phone != null" >
-        phone = #{phone,jdbcType=INTEGER},
+        phone = #{phone,jdbcType=CHAR},
       </if>
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.User" >
     update user
-    set phone = #{phone,jdbcType=INTEGER},
+    set phone = #{phone,jdbcType=CHAR},
       password = #{password,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},

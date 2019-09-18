@@ -8,12 +8,14 @@ import com.example.demo.service.UserServ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/User")
@@ -25,9 +27,10 @@ public class UserCtrl {
     private JwtHelper jwtHelper;
 
     @RequestMapping("/Login")
-    public void login(@RequestParam(value = "phone") int phone,
-                      @RequestParam(value = "password") String password,
+    public void login(@RequestBody Map<String,Object> map,
                       HttpServletResponse response) throws IOException {
+        String phone = (String)map.get("phone");
+        String password = (String)map.get("password");
         List<User> user_list = userServ.LoginByPhone(phone);
         ResultData result;
         JSONResponse jsonResponse = new JSONResponse(response);
@@ -55,10 +58,17 @@ public class UserCtrl {
     }
 
     @RequestMapping("/Insert")
-    public void insert(User user,HttpServletResponse response) throws IOException {
-        List<User> user_list = userServ.LoginByPhone(user.getPhone());
+    public void insert(@RequestBody User user,HttpServletResponse response) throws IOException {
         ResultData result;
+        System.out.println("开始执行Use/Insert");
         JSONResponse jsonResponse = new JSONResponse(response);
+        if(user==null){
+            jsonResponse.DBresult(0);
+            System.out.println("收到的参数为空");
+            return;
+        }
+        System.out.println("开始插入数据库");
+        List<User> user_list = userServ.LoginByPhone(user.getPhone());
         if (null != user_list){
             result = ResultData.repeat();
             jsonResponse.setResult(result);
@@ -85,23 +95,15 @@ public class UserCtrl {
     @RequestMapping("/Update")
     public void update(User user,HttpServletResponse response) throws IOException {
         int flag = userServ.UpdateInfo(user);
-        ResultData result;
         JSONResponse jsonResponse = new JSONResponse(response);
         jsonResponse.DBresult(flag);
         return;
     }
     @RequestMapping("/SelectAll")
     public void selectAll(HttpServletResponse response) throws IOException {
+        System.out.println("User/SelectAll被访问");
         List<User> user_list = userServ.SelectAll();
-        ResultData result;
         JSONResponse jsonResponse = new JSONResponse(response);
-        if (null == user_list){
-            result = ResultData.notFound();
-        }
-        result = ResultData.ok();
-        result.addData("user_list",user_list);
-        jsonResponse.setResult(result);
-        jsonResponse.JSONWrite();
-        return;
+        jsonResponse.DBresultByList(user_list);
     }
 }

@@ -37,27 +37,13 @@ public class ShopCCtrl {
     @RequestMapping("/SelectByShopC")
     public void selectByShopc(@RequestParam(value = "UserId")int UserId,HttpServletResponse response) throws IOException {
         List<Shopping_car> shopC_list = shopCServ.SelectShopC(UserId);
-        ResultData result;
-        if (shopC_list.isEmpty()){
-            result = ResultData.db_error();
-        }else{
-            result = ResultData.ok();
-            result.addData("shopC_list",shopC_list);
-        }
-        JSONResponse jsonResponse = new JSONResponse(response,result);
-        jsonResponse.JSONWrite();
+        JSONResponse jsonResponse = new JSONResponse(response);
+        jsonResponse.DBresultByList(shopC_list);
     }
     @RequestMapping("/SelectByOrder")
     public void selectByOrder(@RequestParam(value = "OrderId")int OrderId,HttpServletResponse response) throws IOException {
         List<Shopping_car> order_product_list = shopCServ.SelectOrder(OrderId);
-        ResultData result;
-        if (order_product_list.isEmpty()){
-            result = ResultData.db_error();
-        }else{
-            result = ResultData.ok();
-            result.addData("order_product_list",order_product_list);
-        }
-        JSONResponse jsonResponse = new JSONResponse(response,result);
-        jsonResponse.JSONWrite();
+        JSONResponse jsonResponse = new JSONResponse(response);
+        jsonResponse.DBresultByList(order_product_list);
     }
 }

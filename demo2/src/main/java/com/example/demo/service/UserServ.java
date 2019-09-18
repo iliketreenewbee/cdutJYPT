@@ -14,7 +14,7 @@ public interface UserServ {
 
     List<User> SelectAll();
 
-    List<User> LoginByPhone(Integer phone);
+    List<User> LoginByPhone(String phone);
 
     int UpdateInfo(User user);
 }

@@ -3,8 +3,6 @@ package com.example.demo.dao;
 import com.example.demo.bean.Order;
 import com.example.demo.bean.OrderExample;
 import java.util.List;
-
-import com.example.demo.bean.Shopping_car;
 import org.apache.ibatis.annotations.Param;
 
 public interface OrderMapper {
@@ -21,6 +19,8 @@ public interface OrderMapper {
     List<Order> selectByExample(OrderExample example);
 
     Order selectByPrimaryKey(Integer id);
+
+    int  insertMany(List<Order> order_list);
 
     int updateByExampleSelective(@Param("record") Order record, @Param("example") OrderExample example);
 

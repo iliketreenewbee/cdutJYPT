@@ -28,5 +28,5 @@ public interface Shopping_carMapper {
 
     int updateByPrimaryKey(Shopping_car record);
 
-    int updateShopcToOrder(List<Shopping_car> shopc_list);
+    int updateShopcToOrder(List<Shopping_car> shopC_list);
 }

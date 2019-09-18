@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 @Service("OrderService")
 public class OrderImpl implements OrderServ {
@@ -23,13 +26,21 @@ public class OrderImpl implements OrderServ {
 
     @Override
     @Transactional
-    public int Insert(Order order, List<Shopping_car> shopC_list) {
+    public int Insert(List<Order> order_list, List<Shopping_car> shopC_list) {
         //更新购物车中的商品状态shopc为order
         shopping_carMapper.updateShopcToOrder(shopC_list);
         //更新商品表中的商品数量
         productsMapper.updateCountMany(shopC_list);
         //插入新增的order记录
-        return orderMapper.insert(order);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = sdf.format(new Date().getTime());
+        ParsePosition pos = new ParsePosition(8);
+        Date orderTime = sdf.parse(currentTime, pos);
+        for(int i=0;i<order_list.size();i++){
+            order_list.get(i).setTime(orderTime);
+            order_list.get(i).setOrderStatus("已下单");
+        }
+        return orderMapper.insertMany(order_list);
     }
 
     @Override

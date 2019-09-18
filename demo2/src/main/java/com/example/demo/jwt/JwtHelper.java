@@ -20,7 +20,7 @@ public class JwtHelper {
         System.out.println("正在初始化Jwthelper，expire="+expire);
     }
 
-    public String generateToken(int phone,String password){
+    public String generateToken(String phone,String password){
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         c.add(Calendar.SECOND, (int)EXPIRATION_TIME);

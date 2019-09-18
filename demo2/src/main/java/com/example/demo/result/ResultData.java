@@ -2,12 +2,13 @@ package com.example.demo.result;
 
 import com.sun.javafx.collections.MappingChange;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ResultData {
     private int code;           //状态码
     private String message;     //状态信息
-    private Map<String ,Object> data;        //返回数据
+    private Map<String ,Object> data = new HashMap<>();        //返回数据
     public ResultData(){
 
     };

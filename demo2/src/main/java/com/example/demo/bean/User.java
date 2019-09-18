@@ -3,7 +3,7 @@ package com.example.demo.bean;
 public class User {
     private Integer id;
 
-    private Integer phone;
+    private String phone;
 
     private String password;
 
@@ -23,12 +23,12 @@ public class User {
         this.id = id;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
-        this.phone = phone;
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getPassword() {

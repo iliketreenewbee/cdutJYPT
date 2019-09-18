@@ -37,19 +37,19 @@ public class OrderCtrl {
                        @RequestParam(value = "productInfo") String productInfo,
                        HttpServletResponse response) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        Order order = mapper.readValue(orderInfo,Order.class);
-        JavaType javaType =  mapper.getTypeFactory().constructParametricType(ArrayList.class, Shopping_car.class);
-        List<Shopping_car> shopC_list = mapper.readValue(productInfo,javaType);
+        JavaType javaType1 =  mapper.getTypeFactory().constructParametricType(ArrayList.class, Order.class);
+        List<Order> order_list = mapper.readValue(productInfo,javaType1);
+        JavaType javaType2 =  mapper.getTypeFactory().constructParametricType(ArrayList.class, Shopping_car.class);
+        List<Shopping_car> shopC_list = mapper.readValue(productInfo,javaType2);
         JSONResponse jsonResponse = new JSONResponse(response);
         //检查商品数量是否充足,不足则返回退出
         List<Products> not_enough_list = productsServ.SelectNotEnough(shopC_list);
         if(!not_enough_list.isEmpty()){
-            ResultData result = ResultData.not_enough();
-            jsonResponse.setResult(result);
+            jsonResponse.result = ResultData.not_enough();
             jsonResponse.JSONWrite();
             return;
         }
-        int flag = orderServ.Insert(order,shopC_list);
+        int flag = orderServ.Insert(order_list,shopC_list);
         jsonResponse.DBresult(flag);
     }
 
@@ -68,41 +68,20 @@ public class OrderCtrl {
     @RequestMapping("/SelectAll")
     public void selectAll(HttpServletResponse response) throws IOException {
         List<Order> order_list = orderServ.SelectAll();
-        ResultData result;
-        if (order_list.isEmpty()){
-            result = ResultData.db_error();
-        }else{
-            result = ResultData.ok();
-            result.addData("order_list",order_list);
-        }
-        JSONResponse jsonResponse = new JSONResponse(response,result);
-        jsonResponse.JSONWrite();
+        JSONResponse jsonResponse = new JSONResponse(response);
+        jsonResponse.DBresultByList(order_list);
     }
     @RequestMapping("/SelectByUser")
     public void selectByUser(@RequestParam(value = "id")int id, HttpServletResponse response) throws IOException {
         List<Order> order_list = orderServ.SelectByUserId(id);
-        ResultData result;
-        if (order_list.isEmpty()){
-            result = ResultData.db_error();
-        }else{
-            result = ResultData.ok();
-            result.addData("order_list",order_list);
-        }
-        JSONResponse jsonResponse = new JSONResponse(response,result);
-        jsonResponse.JSONWrite();
+        JSONResponse jsonResponse = new JSONResponse(response);
+        jsonResponse.DBresultByList(order_list);
     }
     @RequestMapping("/SelectByOwner")
     public void selectByOwner(@RequestParam(value = "id")int id, HttpServletResponse response) throws IOException {
         List<Order> order_list = orderServ.SelectByOwnerId(id);
-        ResultData result;
-        if (order_list.isEmpty()){
-            result = ResultData.db_error();
-        }else{
-            result = ResultData.ok();
-            result.addData("order_list",order_list);
-        }
-        JSONResponse jsonResponse = new JSONResponse(response,result);
-        jsonResponse.JSONWrite();
+        JSONResponse jsonResponse = new JSONResponse(response);
+        jsonResponse.DBresultByList(order_list);
     }
     @RequestMapping("/Update")
     public void update(@RequestBody Order order, HttpServletResponse response) throws IOException {

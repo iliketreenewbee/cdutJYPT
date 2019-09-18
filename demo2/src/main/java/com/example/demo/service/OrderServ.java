@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface OrderServ {
 
-    int Insert(Order order, List<Shopping_car> shopC_list);
+    int Insert(List<Order> order_list, List<Shopping_car> shopC_list);
 
     int Delete(int OrderId);
 

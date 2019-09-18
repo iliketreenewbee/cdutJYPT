@@ -5,10 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 public class JSONResponse {
-    private HttpServletResponse response;
-    private ResultData result;
+    public HttpServletResponse response;
+    public ResultData result = new ResultData();
 
     public JSONResponse(){
 
@@ -29,19 +30,29 @@ public class JSONResponse {
     public void DBresult(int flag) throws IOException {
         if (flag == 1){
             this.result = ResultData.ok();
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonStr = mapper.writeValueAsString(result);
-            response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().write(jsonStr);
+
             return;
         }else{
             this.result = ResultData.db_error();
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonStr = mapper.writeValueAsString(result);
-            response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().write(jsonStr);
-            return;
         }
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonStr = mapper.writeValueAsString(this.result);
+        response.setContentType("text/html;charset=UTF-8");
+        response.getWriter().write(jsonStr);
+        return;
+    }
+    public <T extends List> void DBresultByList(T result_list) throws IOException {
+        if(result_list.isEmpty()){
+            this.result = ResultData.db_error();
+        }else{
+            this.result = ResultData.ok();
+            this.result.addData("result_list",result_list);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonStr = mapper.writeValueAsString(this.result);
+        response.setContentType("text/html;charset=UTF-8");
+        response.getWriter().write(jsonStr);
+        return;
     }
 
     public HttpServletResponse getResponse() {

@@ -25,41 +25,20 @@ public class ProductCtrl {
     @RequestMapping("/SelectAll")
     public void SelectAll(HttpServletResponse response) throws IOException {
         List<Products> products_list = productsServ.SelectAll();
-        ResultData result;
-        if(products_list.isEmpty()==true){
-            result = ResultData.db_error();
-        }else{
-            result = ResultData.ok();
-            result.addData("products_list",products_list);
-        }
-        JSONResponse jsonResponse = new JSONResponse(response,result);
-        jsonResponse.JSONWrite();
+        JSONResponse jsonResponse = new JSONResponse(response);
+        jsonResponse.DBresultByList(products_list);
     }
     @RequestMapping("/SelectByOwner")
     public void selectByOwner(HttpServletResponse response, @RequestParam("id") int id) throws IOException {
         List<Products> products_list = productsServ.SelectByShopOwner(id);
-        ResultData result;
-        if(products_list.isEmpty()==true){
-            result = ResultData.notFound();
-        }else{
-            result = ResultData.ok();
-            result.addData("products_list",products_list);
-        }
-        JSONResponse jsonResponse = new JSONResponse(response,result);
-        jsonResponse.JSONWrite();
+        JSONResponse jsonResponse = new JSONResponse(response);
+        jsonResponse.DBresultByList(products_list);
     }
     @RequestMapping("/SelectByKey")
     public void selectByKey(HttpServletResponse response, @RequestParam("key") String key) throws IOException {
         List<Products> products_list = productsServ.SelectWtithKey(key);
-        ResultData result;
-        if(products_list.isEmpty()==true){
-            result = ResultData.notFound();
-        }else{
-            result = ResultData.ok();
-            result.addData("products_list",products_list);
-        }
-        JSONResponse jsonResponse = new JSONResponse(response,result);
-        jsonResponse.JSONWrite();
+        JSONResponse jsonResponse = new JSONResponse(response);
+        jsonResponse.DBresultByList(products_list);
     }
     @RequestMapping("/Insert")
     public void insert(@RequestBody Products products,HttpServletResponse response) throws IOException {

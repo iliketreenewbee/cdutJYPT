@@ -291,9 +291,9 @@
     update shopping_car
     set status = 'order'
     <where>>
-    <foreach collection="list" separator="or" item="item" index="index">
-      id = #{item.goodId}
-    </foreach>
+      <foreach collection="list" separator="or" item="item" index="index">
+        id = #{item.goodId}
+      </foreach>
     </where>
   </update>
 </mapper>
