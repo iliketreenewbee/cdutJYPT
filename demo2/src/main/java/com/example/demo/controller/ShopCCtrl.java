@@ -23,7 +23,8 @@ public class ShopCCtrl {
     private ShopCServ shopCServ;
 
     @RequestMapping("/Insert")
-    public void insert(Shopping_car shopping_car, HttpServletResponse response) throws IOException {
+    public void insert(@RequestBody Shopping_car shopping_car, HttpServletResponse response) throws IOException {
+        System.out.println("当前名称"+shopping_car.getProductName());
         int flag = shopCServ.InsertGood(shopping_car);
         JSONResponse jsonResponse = new JSONResponse(response);
         jsonResponse.DBresult(flag);
@@ -37,6 +38,7 @@ public class ShopCCtrl {
     @RequestMapping("/SelectByShopC")
     public void selectByShopc(@RequestParam(value = "UserId")int UserId,HttpServletResponse response) throws IOException {
         List<Shopping_car> shopC_list = shopCServ.SelectShopC(UserId);
+        System.out.println("当前id"+UserId);
         JSONResponse jsonResponse = new JSONResponse(response);
         jsonResponse.DBresultByList(shopC_list);
     }

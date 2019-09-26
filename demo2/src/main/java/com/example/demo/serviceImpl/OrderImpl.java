@@ -3,6 +3,7 @@ package com.example.demo.serviceImpl;
 import com.example.demo.bean.Order;
 import com.example.demo.bean.OrderExample;
 import com.example.demo.bean.Shopping_car;
+import com.example.demo.bean.Shopping_carExample;
 import com.example.demo.dao.OrderMapper;
 import com.example.demo.dao.ProductsMapper;
 import com.example.demo.dao.Shopping_carMapper;
@@ -27,20 +28,35 @@ public class OrderImpl implements OrderServ {
     @Override
     @Transactional
     public int Insert(List<Order> order_list, List<Shopping_car> shopC_list) {
+        System.out.println("开始插入订单");
+        //插入新增的order记录
+        Date orderTime = new Date();
+        for(int i=0;i<order_list.size();i++){
+            System.out.println("所属类："+order_list.get(0).getClass());
+            order_list.get(i).setTime(orderTime);
+            order_list.get(i).setOrderStatus("已下单");
+        }
+      int flag = orderMapper.insertMany(order_list);
+        System.out.println("插入订单完成");
+       for(int i=0;i<order_list.size();i++){
+            System.out.println("插入id为："+order_list.get(i).getId());
+        }
+        System.out.println("当前订单id："+shopC_list.get(0).getOrderId());
+        for(int i=0;i<shopC_list.size();i++){
+           Shopping_car shopC = shopC_list.get(i);
+            for(int j=0;j<order_list.size();j++){
+                Order order = order_list.get(j);
+                if(shopC.getOwnerId() == order.getOwnerId()){
+                    shopC_list.get(i).setOrderId(order.getId());
+                }
+            }
+        }
+        System.out.println("当前订单id："+shopC_list.get(0).getOrderId());
         //更新购物车中的商品状态shopc为order
         shopping_carMapper.updateShopcToOrder(shopC_list);
         //更新商品表中的商品数量
         productsMapper.updateCountMany(shopC_list);
-        //插入新增的order记录
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentTime = sdf.format(new Date().getTime());
-        ParsePosition pos = new ParsePosition(8);
-        Date orderTime = sdf.parse(currentTime, pos);
-        for(int i=0;i<order_list.size();i++){
-            order_list.get(i).setTime(orderTime);
-            order_list.get(i).setOrderStatus("已下单");
-        }
-        return orderMapper.insertMany(order_list);
+        return flag;
     }
 
     @Override
@@ -79,7 +95,24 @@ public class OrderImpl implements OrderServ {
     }
 
     @Override
+    @Transactional
     public int UpdateSatus(Order order) {
-        return orderMapper.updateByPrimaryKey(order);
+        if (order.getOrderStatus().equals("退单")){
+            Shopping_carExample example = new Shopping_carExample();
+            Shopping_carExample.Criteria criteria = example.createCriteria();
+            criteria.andOrderIdEqualTo(order.getId());
+            Shopping_car shopC = new Shopping_car();
+            shopC.setStatus("back");
+            shopping_carMapper.updateByExampleSelective(shopC,example);
+            List<Shopping_car> shopC_list = shopping_carMapper.selectByExample(example);
+            for (int i=0;i<shopC_list.size();i++){
+                int count = -shopC_list.get(i).getCount();
+                shopC_list.get(i).setCount(count);
+            }
+            productsMapper.updateCountMany(shopC_list);
+            return orderMapper.updateByPrimaryKey(order);
+        }else {
+            return orderMapper.updateByPrimaryKey(order);
+        }
     }
 }

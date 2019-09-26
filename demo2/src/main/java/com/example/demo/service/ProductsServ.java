@@ -9,6 +9,8 @@ public interface ProductsServ {
 
     List<Products> SelectAll();
 
+    Products SelectById(int id);
+
     List<Products> SelectByShopOwner(int ownerId);
 
     List<Products> SelectWtithKey(String key);

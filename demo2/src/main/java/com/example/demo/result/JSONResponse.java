@@ -28,10 +28,8 @@ public class JSONResponse {
         response.getWriter().write(jsonStr);
     }
     public void DBresult(int flag) throws IOException {
-        if (flag == 1){
+        if (flag != 0){
             this.result = ResultData.ok();
-
-            return;
         }else{
             this.result = ResultData.db_error();
         }

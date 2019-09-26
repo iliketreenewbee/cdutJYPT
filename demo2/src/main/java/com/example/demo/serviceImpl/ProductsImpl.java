@@ -26,6 +26,11 @@ public class ProductsImpl implements ProductsServ {
     }
 
     @Override
+    public Products SelectById(int id) {
+        return productsMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public List<Products> SelectByShopOwner(int ownerId) {
         ProductsExample example = new ProductsExample();
         ProductsExample.Criteria criteria =  example.createCriteria();

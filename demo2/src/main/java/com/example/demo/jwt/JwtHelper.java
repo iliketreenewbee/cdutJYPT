@@ -42,10 +42,14 @@ public class JwtHelper {
         if (token == null) {
             return null;
         }
-        Map<String, Object> body = Jwts.parser()
-                .setSigningKey(SECRET)
-                .parseClaimsJws(token)
-                .getBody();
-        return body;
+        try {
+            Map<String, Object> body = Jwts.parser()
+                    .setSigningKey(SECRET)
+                    .parseClaimsJws(token)
+                    .getBody();
+            return body;
+        }catch (io.jsonwebtoken.ExpiredJwtException e){
+            return null;
+        }
     }
 }

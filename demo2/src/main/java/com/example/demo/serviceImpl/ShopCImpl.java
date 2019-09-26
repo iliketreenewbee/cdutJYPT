@@ -7,6 +7,9 @@ import com.example.demo.service.ShopCServ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service("ShopCService")
@@ -15,6 +18,7 @@ public class ShopCImpl implements ShopCServ {
     private Shopping_carMapper shopping_carMapper;
     @Override
     public int InsertGood(Shopping_car shopC) {
+        shopC.setTime(new Date());
         return shopping_carMapper.insertSelective(shopC);
     }
 

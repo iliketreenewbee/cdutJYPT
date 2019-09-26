@@ -23,6 +23,8 @@ public class Shopping_car {
 
     private Integer orderId;
 
+    private Integer ownerId;
+
     public Integer getId() {
         return id;
     }
@@ -101,5 +103,13 @@ public class Shopping_car {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
     }
 }
